@@ -25,6 +25,10 @@ Please type your choice of either 'Investment' or 'Bond' to proceed: """).lower(
             print("\nInvalid input. Please select an option by entering either 'investment' or 'bond'.\n")           
         if user_selection == 'investment':    # User selected investment
             deposit_amount = float(input("Enter the amount of money you wish to deposit (in GBP): "))
+            if deposit_amount < 0:
+                print("\nInvalid input. Please enter a non-negative value for the deposit amount.\n")
+                back_to_start = True
+                continue  # Skip the rest of the loop iteration
             r = float(input("Enter the expected interest rate percentage (Input example: 5.00 Represents 5%): ")) / 100
             t = int(input("Enter the number of years you plan on investing: "))
             interest = input("Would you like the interest rate to be calculated as 'simple' or 'compound' interest? ").lower()    # Make all text inputs lower case
@@ -40,6 +44,10 @@ Please type your choice of either 'Investment' or 'Bond' to proceed: """).lower(
                 back_to_start = True # If a user inputs an invalid response the program will restart from the beginning
         elif user_selection == 'bond': # User selected bond
             deposit_amount = float(input("Enter the present value (current market value) of the house (in GBP): "))
+            if deposit_amount < 0:
+                print("\nInvalid input. Please enter a non-negative value for the present value of the house.\n")
+                back_to_start = True
+                continue  # Skip the rest of the loop iteration
             i_user_input = float(input("Enter the expected annual interest rate percentage (Input example: 5.00 Represents 5%): "))
             number_of_months = int(input("Enter the number of months in which the bond will be repaid: "))
             interest_rate = (i_user_input / 100) / 12
