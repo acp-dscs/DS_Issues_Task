@@ -24,26 +24,34 @@ Please type your choice of either 'Investment' or 'Bond' to proceed: """).lower(
         else:
             print("\nInvalid input. Please select an option by entering either 'investment' or 'bond'.\n")           
         if user_selection == 'investment':    # User selected investment
-            P = float(input("Enter the amount of money you wish to deposit (in GBP): "))
+            deposit_amount = float(input("Enter the amount of money you wish to deposit (in GBP): "))
+            if deposit_amount < 0:
+                print("\nInvalid input. Please enter a non-negative value for the deposit amount.\n")
+                back_to_start = True
+                continue  # Skip the rest of the loop iteration
             r = float(input("Enter the expected interest rate percentage (Input example: 5.00 Represents 5%): ")) / 100
             t = int(input("Enter the number of years you plan on investing: "))
             interest = input("Would you like the interest rate to be calculated as 'simple' or 'compound' interest? ").lower()    # Make all text inputs lower case
             # Calculate the interest 'simple' or 'compound'
             if interest == 'simple':    # User chose simple interest formula
-                A = P * (1 + r * t)
-                print(f"The total amount to be returned (i.e. initial investment and interest) following your initial investment of £{P:.2f} at an interest rate ({interest}) of {r*100}% after {t} years will be: £{A:.2f}")
+                A = deposit_amount * (1 + r * t)
+                print(f"The total amount to be returned (i.e. initial investment and interest) following your initial investment of £{deposit_amount:.2f} at an interest rate ({interest}) of {r*100}% after {t} years will be: £{A:.2f}")
             elif interest == 'compound':
-                A = P * math.pow((1 + r), t)    # User chose compound interest formula (which uses to the power of)
-                print(f"The total amount to be returned (i.e. initial investment and interest) following your initial investment of £{P:.2f} at an interest rate ({interest}) of {r*100}% after {t} years will be: £{A:.2f}")
+                A = deposit_amount * math.pow((1 + r), t)    # User chose compound interest formula (which uses to the power of)
+                print(f"The total amount to be returned (i.e. initial investment and interest) following your initial investment of £{deposit_amount:.2f} at an interest rate ({interest}) of {r*100}% after {t} years will be: £{A:.2f}")
             else:
                 print("\nInvalid input. Next time, please enter either 'simple' or 'compound'.\n")
                 back_to_start = True # If a user inputs an invalid response the program will restart from the beginning
         elif user_selection == 'bond': # User selected bond
-            P = float(input("Enter the present value (current market value) of the house (in GBP): "))
+            deposit_amount = float(input("Enter the present value (current market value) of the house (in GBP): "))
+            if deposit_amount < 0:
+                print("\nInvalid input. Please enter a non-negative value for the present value of the house.\n")
+                back_to_start = True
+                continue  # Skip the rest of the loop iteration
             i_user_input = float(input("Enter the expected annual interest rate percentage (Input example: 5.00 Represents 5%): "))
-            n = int(input("Enter the number of months in which the bond will be repaid: "))
-            i = (i_user_input / 100) / 12
-            repayment = (i * P) / (1 - math.pow((1 + i), -n))    # One option so one formula (uses to the power of)
+            number_of_months = int(input("Enter the number of months in which the bond will be repaid: "))
+            interest_rate = (i_user_input / 100) / 12
+            repayment = (interest_rate * deposit_amount) / (1 - math.pow((1 + interest_rate), -number_of_months))    # One option so one formula (uses to the power of)
             print(f"The monthly interest and capital, bond repayment amount will be: £{repayment:.2f}")
     # Handle all user input errors with use of exception   
     except Exception as e:
